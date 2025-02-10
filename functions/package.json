@@ -1,5 +1,5 @@
 {
-  "name": "functions",
+  "name": "oncall_exportar_boleto_bancario",
   "scripts": {
     "build": "tsc",
     "build:watch": "tsc --watch",

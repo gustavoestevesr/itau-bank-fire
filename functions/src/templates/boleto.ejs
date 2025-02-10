@@ -1,228 +1,380 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Boleto Itaú</title>
     <style>
+      .pagina {
+        width: 210mm;
+        font-family: Helvetica, Arial, "Lucida Grande", sans-serif;
+        font-size: 8pt;
+        font-weight: bold;
+        margin: 5mm auto;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+
+      td {
+        border: 1pt black solid;
+        padding-left: 2pt;
+        padding-right: 2pt;
+        font-weight: normal;
+      }
+
+      td.center {
+        text-align: center;
+        vertical-align: super;
+      }
+
+      td.left {
+        text-align: left;
+        vertical-align: super;
+      }
+
+      td.right {
+        text-align: right;
+        vertical-align: super;
+      }
+
+      p {
+        font-weight: bold;
+        text-align: left;
+        white-space: nowrap;
+        margin-top: 2pt;
+      }
+
+      td.sem-borda {
+        border: none;
+      }
+
+      td.borda-left {
+        border: none;
+        border-right: 1pt solid;
+        vertical-align: bottom;
+      }
+
+      td.cabecalho {
+        padding: 0 2mm 0 2mm;
+        font-weight: bold;
+        font-size: 10pt;
+        vertical-align: bottom;
+      }
+
+      td.logo {
+        font-size: 8pt;
+      }
+
+      hr {
+        border-top: 1pt dashed;
+      }
+
+      p.lb-autenticacao {
+        text-align: right;
+        margin-right: 5mm;
+      }
+
+      @media print {
+        .noprint {
+          display: none;
+        }
+
         .pagina {
-            width: 210mm;
-            font-family: Helvetica,
-                Arial,
-                "Lucida Grande",
-                sans-serif;
-            font-size: 8pt;
-            font-weight: bold;
-            margin: 5mm auto;
+          width: 100%;
         }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-
-        td {
-            border: 1pt black solid;
-            padding-left: 2pt;
-            padding-right: 2pt;
-            font-weight: normal;
-        }
-
-        td.center {
-            text-align: center;
-            vertical-align: super;
-        }
-
-        td.left {
-            text-align: left;
-            vertical-align: super;
-        }
-
-        td.right {
-            text-align: right;
-            vertical-align: super;
-        }
-
-        p {
-            font-weight: bold;
-            text-align: left;
-            white-space: nowrap;
-            margin-top: 2pt;
-        }
-
-        td.sem-borda {
-            border: none;
-        }
-
-        td.borda-left {
-            border: none;
-            border-right: 1pt solid;
-            vertical-align: bottom;
-        }
-
-        td.cabecalho {
-            padding: 0 2mm 0 2mm;
-            font-weight: bold;
-            font-size: 10pt;
-            vertical-align: bottom;
-        }
-
-        td.logo {
-            font-size: 8pt;
-        }
-
-        hr {
-            border-top: 1pt dashed
-        }
-
-        p.lb-autenticacao {
-            text-align: right;
-            margin-right: 5mm;
-        }
-
-        @media print {
-            .noprint {
-                display: none;
-            }
-
-            .pagina {
-                width: 100%;
-            }
-        }
+      }
     </style>
-</head>
+  </head>
 
-<body>
+  <body>
     <div class="pagina">
-        <table>
-            <tr>
-                <td class="borda-left logo cabecalho">
-                    <img src="<%= logo_empresa %>" alt="logo itaú" width="32">
-                    Banco Itaú S.A.
+      <table>
+        <tr>
+          <td class="borda-left logo cabecalho">
+            <img src="<%= logo_empresa %>" alt="logo itaú" width="32" />
+            Banco Itaú S.A.
+          </td>
+          <td class="borda-left cabecalho center">341-7</td>
+          <td class="sem-borda cabecalho right" colspan="5">
+            Recibo do Pagador<br />
+            <%= boleto.codigo %>
+          </td>
+        </tr>
+        <tr>
+          <td class="left" colspan="6">
+            <p>Local de Pagamento</p>
+            <%= boleto.local_pagamento %>
+          </td>
+          <td class="center">
+            <p>Data de Vencimento</p>
+            <%= boleto.data_vencimento %>
+          </td>
+        </tr>
+        <tr>
+          <td class="left" colspan="6">
+            <p>Nome do Beneficiário / CNPJ / CPF / Endereço:</p>
+            CPF: 123.456.789.10 <br />
+            Rua Suvaco da Cobra, 9 - Narnia - Amazonas - AM - 69060-000
+          </td>
+          <td class="center">
+            <p>Agência/Código Beneficiário</p>
+            <%= beneficiario.agencia_codigo %>
+          </td>
+        </tr>
+        <tr>
+          <td class="center">
+            <p>Data do documento</p>
+            <%= documento.data_doc %>
+          </td>
+          <td class="center" colspan="2">
+            <p>Núm. do documento</p>
+            <%= documento.numero_doc %>
+          </td>
+          <td class="center">
+            <p>Espécie doc</p>
+            <%= documento.especie_doc %>
+          </td>
+          <td class="center">
+            <p>Aceite</p>
+            <%= documento.aceite_doc %>
+          </td>
+          <td class="center">
+            <p>Data Processamento</p>
+            <%= documento.data_processamento %>
+          </td>
+          <td class="center">
+            <p>Nosso Número</p>
+            <%= beneficiario.nosso_numero %>
+          </td>
+        </tr>
+        <tr>
+          <td class="center">
+            <p>Uso do Banco</p>
+            <%= documento.uso_do_banco %>
+          </td>
+          <td class="center">
+            <p>Carteira</p>
+            <%= documento.carteira %>
+          </td>
+          <td class="center">
+            <p>Espécie</p>
+            <%= documento.especie %>
+          </td>
+          <td class="center" colspan="2">
+            <p>Quantidade</p>
+            <%= documento.quantidade %>
+          </td>
+          <td class="center">
+            <p>Valor</p>
+            <%= documento.valor %>
+          </td>
+          <td class="center">
+            <p>(=) Valor do Documento</p>
+            <%= boleto.valor_documento %>
+          </td>
+        </tr>
+        <tr>
+          <td class="left" colspan="6" rowspan="3">
+            <p>Instruções</p>
+            <%= documento.instrucoes %>
+          </td>
+          <td class="center">
+            <p>(-) Descontos/Abatimentos</p>
+            <%= boleto.descontos_abatimentos %>
+          </td>
+        </tr>
+        <tr>
+          <td class="center">
+            <p>(+) Juros/Multa</p>
+            <%= boleto.juros_multas %>
+          </td>
+        </tr>
+        <tr>
+          <td class="center">
+            <p>(=) Valor Pago</p>
+            <%= boleto.valor_pago %>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="7">
+            <table>
+              <tr>
+                <td class="sem-borda">
+                  <b>Nome do Pagador: </b> <%= pagador.nome %>
                 </td>
-                <td class="borda-left cabecalho center">341-7</td>
-                <td class="sem-borda cabecalho right" colspan="5">
-                    Recibo do Pagador<br>
-                    <%= boleto.codigo %>
+                <td class="sem-borda">
+                  <b>CPF/CNPJ: </b> <%= pagador.documento_principal %>
                 </td>
-            </tr>
-            <tr>
-                <td class="left" colspan="6">
-                    <p>Local de Pagamento</p>
-                    <%= boleto.local_pagamento %>
+              </tr>
+              <tr>
+                <td class="sem-borda">
+                  <b>Endereço: </b> <%= pagador.endereco %>
                 </td>
-                <td class="center">
-                    <p>Data de Vencimento</p>
-                    <%= boleto.data_vencimento %>
+              </tr>
+              <tr>
+                <td class="sem-borda">
+                  <b>Sacador/Avalista: </b> <%= pagador.sacador_avalista %>
                 </td>
-            </tr>
-            <tr>
-                <td class="left" colspan="6">
-                    <p>Nome do Beneficiário / CNPJ / CPF / Endereço:</p>
-                    CPF: 123.456.789.10 <br>
-                    Rua Suvaco da Cobra, 9 - Narnia - Amazonas - AM - 69060-000
+                <td class="sem-borda">
+                  <b>CPF/CNPJ: </b> <%= pagador.documento_secundario %>
                 </td>
-                <td class="center">
-                    <p>Agência/Código Beneficiário</p>
-                    <%= beneficiario.agencia_codigo %>
+              </tr>
+            </table>
+          </td>
+        </tr>
+      </table>
+      <p class="lb-autenticacao"><b>Autenticação Mecânica</b></p>
+      <hr />
+      <br />
+      <table>
+        <tr>
+          <td class="borda-left logo cabecalho">
+            <img src="<%= logo_empresa %>" alt="logo itaú" width="32" />
+            Banco Itaú S.A.
+          </td>
+          <td class="borda-left cabecalho center">341-7</td>
+          <td class="sem-borda cabecalho right" colspan="5">
+            Recibo do Pagador<br />
+            <%= boleto.codigo %>
+          </td>
+        </tr>
+        <tr>
+          <td class="left" colspan="6">
+            <p>Local de Pagamento</p>
+            <%= boleto.local_pagamento %>
+          </td>
+          <td class="center">
+            <p>Data de Vencimento</p>
+            <%= boleto.data_vencimento %>
+          </td>
+        </tr>
+        <tr>
+          <td class="left" colspan="6">
+            <p>Nome do Beneficiário / CNPJ / CPF / Endereço:</p>
+            CPF: 123.456.789.10 <br />
+            Rua Suvaco da Cobra, 9 - Narnia - Amazonas - AM - 69060-000
+          </td>
+          <td class="center">
+            <p>Agência/Código Beneficiário</p>
+            <%= beneficiario.agencia_codigo %>
+          </td>
+        </tr>
+        <tr>
+          <td class="center">
+            <p>Data do documento</p>
+            <%= documento.data_doc %>
+          </td>
+          <td class="center" colspan="2">
+            <p>Núm. do documento</p>
+            <%= documento.numero_doc %>
+          </td>
+          <td class="center">
+            <p>Espécie doc</p>
+            <%= documento.especie_doc %>
+          </td>
+          <td class="center">
+            <p>Aceite</p>
+            <%= documento.aceite_doc %>
+          </td>
+          <td class="center">
+            <p>Data Processamento</p>
+            <%= documento.data_processamento %>
+          </td>
+          <td class="center">
+            <p>Nosso Número</p>
+            <%= beneficiario.nosso_numero %>
+          </td>
+        </tr>
+        <tr>
+          <td class="center">
+            <p>Uso do Banco</p>
+            <%= documento.uso_do_banco %>
+          </td>
+          <td class="center">
+            <p>Carteira</p>
+            <%= documento.carteira %>
+          </td>
+          <td class="center">
+            <p>Espécie</p>
+            <%= documento.especie %>
+          </td>
+          <td class="center" colspan="2">
+            <p>Quantidade</p>
+            <%= documento.quantidade %>
+          </td>
+          <td class="center">
+            <p>Valor</p>
+            <%= documento.valor %>
+          </td>
+          <td class="center">
+            <p>(=) Valor do Documento</p>
+            <%= boleto.valor_documento %>
+          </td>
+        </tr>
+        <tr>
+          <td class="left" colspan="6" rowspan="3">
+            <p>Instruções</p>
+            <%= documento.instrucoes %>
+          </td>
+          <td class="center">
+            <p>(-) Descontos/Abatimentos</p>
+            <%= boleto.descontos_abatimentos %>
+          </td>
+        </tr>
+        <tr>
+          <td class="center">
+            <p>(+) Juros/Multa</p>
+            <%= boleto.juros_multas %>
+          </td>
+        </tr>
+        <tr>
+          <td class="center">
+            <p>(=) Valor Pago</p>
+            <%= boleto.valor_pago %>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="7">
+            <table>
+              <tr>
+                <td class="sem-borda">
+                  <b>Nome do Pagador: </b> Fulano de Tal 2
                 </td>
-            </tr>
-            <tr>
-                <td class="center">
-                    <p>Data do documento</p>
-                    <%= documento.data_doc %>
+                <td class="sem-borda"><b>CPF/CNPJ: </b> 123.123.123-00</td>
+              </tr>
+              <tr>
+                <td class="sem-borda">
+                  <b>Endereço: </b> Av. André Araujo, 999 - Aleixo - Amazonas -
+                  AM - 69060-000
                 </td>
-                <td class="center" colspan="2">
-                    <p>Núm. do documento</p>
-                    <%= documento.numero_doc %>
+              </tr>
+              <tr>
+                <td class="sem-borda">
+                  <b>Sacador/Avalista: </b> Fulano de Tal 2
                 </td>
-                <td class="center">
-                    <p>Espécie doc</p>
-                    <%= documento.especie_doc %>
-                </td>
-                <td class="center">
-                    <p>Aceite</p>
-                    <%= documento.aceite_doc %>
-                </td>
-                <td class="center">
-                    <p>Data Processamento</p>
-                    <%= documento.data_processamento %>
-                </td>
-                <td class="center">
-                    <p>Nosso Número</p>
-                    <%= beneficiario.nosso_numero %>
-                </td>
-            </tr>
-            <tr>
-                <td class="center">
-                    <p>Uso do Banco</p>
-                    <%= documento.uso_do_banco %>
-                </td>
-                <td class="center">
-                    <p>Carteira</p>
-                    <%= documento.carteira %>
-                </td>
-                <td class="center">
-                    <p>Espécie</p>
-                    <%= documento.especie %>
-                </td>
-                <td class="center" colspan="2">
-                    <p>Quantidade</p>
-                    <%= documento.quantidade %>
-                </td>
-                <td class="center">
-                    <p>Valor</p>
-                    <%= documento.valor %>
-                </td>
-                <td class="center">
-                    <p>(=) Valor do Documento</p>
-                    <%= boleto.valor_documento %>
-                </td>
-            </tr>
-            <tr>
-                <td class="left" colspan="6" rowspan="3">
-                    <p>Instruções</p>
-                    <%= documento.instrucoes %>
-                </td>
-                <td class="center">
-                    <p>(-) Descontos/Abatimentos</p>
-                    <%= boleto.descontos_abatimentos %>
-                </td>
-            </tr>
-            <tr>
-                <td class="center">
-                    <p>(+) Juros/Multa</p>
-                    <%= boleto.juros_multas %>
-                </td>
-            </tr>
-            <tr>
-                <td class="center">
-                    <p>(=) Valor Pago</p>
-                    <%= boleto.valor_pago %>
-                </td>
-            </tr>
-            <tr>
-                <td colspan="7">
-                    <table>
-                        <tr>
-                            <td class="sem-borda"><b>Nome do Pagador: </b> <%= pagador.nome %></td>
-                            <td class="sem-borda"><b>CPF/CNPJ: </b> <%= pagador.documento_principal %></td>
-                        </tr>
-                        <tr>
-                            <td class="sem-borda"><b>Endereço: </b> <%= pagador.endereco %></td>
-                        </tr>
-                        <tr>
-                            <td class="sem-borda"><b>Sacador/Avalista: </b> <%= pagador.sacador_avalista %></td>
-                            <td class="sem-borda"><b>CPF/CNPJ: </b> <%= pagador.documento_secundario %></td>
-                        </tr>
-                    </table>
-                </td>
-            </tr>
-        </table>
-        <p class="lb-autenticacao"><b>Autenticação Mecânica</b></p>
-        <hr>
+                <td class="sem-borda"><b>CPF/CNPJ: </b> 123.123.123-00</td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+      </table>
+      <br />
+      <table>
+        <tr>
+          <td class="sem-borda" rowspan="2">
+            <img src="<%= boleto.codigo_barras %>" />
+          </td>
+          <td class="sem-borda cabecalho right">Ficha de Compensação</td>
+        </tr>
+        <tr>
+          <td class="sem-borda right">
+            <p class="lb-autenticacao"><b>Autenticação Mecânica</b></p>
+          </td>
+        </tr>
+      </table>
     </div>
-</body>
-
+  </body>
 </html>

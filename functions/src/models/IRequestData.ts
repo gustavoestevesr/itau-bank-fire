@@ -26,8 +26,8 @@ export interface IDocumento {
 }
 
 export interface IBoleto {
-  codigo: string;
-  codigo_barras: string;
+  codigo?: string;
+  codigo_barras?: string;
   data_vencimento: string;
   valor_documento: string;
   descontos_abatimentos: string;
@@ -37,7 +37,7 @@ export interface IBoleto {
 }
 
 export interface IRequestData {
-  logo_empresa: string;
+  logo_empresa?: string;
   beneficiario: IBeneficiario;
   pagador: IPagador;
   documento: IDocumento;
